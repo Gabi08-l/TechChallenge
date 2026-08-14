@@ -1,5 +1,6 @@
 html {
   font-size: 14px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -19,6 +20,26 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+}
+
+.login-form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.login-form .form-group,
+.login-form .form-check {
+  margin-bottom: 1rem;
+}
+
+.login-form button {
+  width: 100%;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

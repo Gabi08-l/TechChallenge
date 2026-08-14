@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,11 @@ using TechChallenge;
 
 namespace TechChallenge.Controllers
 {
+
+[Authorize] //Serve para proteger as controllers alunoscontroller, usando o atributo authorize, configurando autenticacao
     public class AlunosController : Controller
     {
+
         private readonly AppDbContext _context;
 
         public AlunosController(AppDbContext context)
