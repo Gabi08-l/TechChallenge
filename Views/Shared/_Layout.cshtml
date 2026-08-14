@@ -47,6 +47,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Projetos" asp-action="Index">Projetos</a>
                         </li>
+
+                        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Admin" asp-action="Roles">Perfil de Usuário</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Admin" asp-action="Usuarios">Usuários</a>
+                            </li>
+                        }
                     </ul>
                     
                     <!-- Incorpora o trecho de Login / Logout -->

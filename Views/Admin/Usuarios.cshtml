@@ -1,0 +1,77 @@
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+@{
+    ViewData["Title"] = "Cadastro de Usuários";
+    var rolesUsuario = ViewBag.RolesUsuarios as Dictionary<string,string>;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Usuários</h2>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary">
+            <i class="bi bi-person-plus"></i> Novo Usuário
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Perfil</th>
+                            <th scope="col" class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            foreach (var usuario in Model)
+                            {
+                                <tr>
+                                    <td>@usuario.Email</td>
+                                    <td>
+                                        @if (rolesUsuario != null)
+                                        {
+                                            foreach (var role in rolesUsuario)
+                                            {
+                                                @if (usuario.Id == role.Key.ToString())
+                                                {
+                                                    <span class="badge bg-primary rounded-pill">
+                                                        @role.Value
+                                                    </span>
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary rounded-pill">Sem Perfil</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                            <a asp-action="TornarAdmin" asp-route-id="@usuario.Id" class="btn btn-sm btn-outline-primary">Tornar Admin</a>
+                                            <a asp-action="TrocarPerfil" asp-route-id="@usuario.Id" class="btn btn-sm btn-outline-secondary">Trocar Perfil</a>
+                                            <form asp-action="Excluir" asp-route-id="@usuario.Id" method="post" class="d-inline" onsubmit="return confirm('Deseja realmente excluir este usuário?');">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-muted">
+                                    Nenhum Usuário Cadastrado.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
