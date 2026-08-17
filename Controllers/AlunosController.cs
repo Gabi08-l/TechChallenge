@@ -10,11 +10,9 @@ using TechChallenge;
 
 namespace TechChallenge.Controllers
 {
-
-[Authorize] //Serve para proteger as controllers alunoscontroller, usando o atributo authorize, configurando autenticacao
+    [Authorize] //Proteger a controller AlunosController, usando o atributo [Authorize], configurando autenticação/autorização.
     public class AlunosController : Controller
     {
-
         private readonly AppDbContext _context;
 
         public AlunosController(AppDbContext context)
@@ -23,8 +21,15 @@ namespace TechChallenge.Controllers
         }
 
         // GET: Alunos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchString)
         {
+            var alunos = _context.Alunos.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                alunos = alunos.Where(a => a.Nome.Contains(searchString));
+            }
+
             return View(await _context.Alunos.ToListAsync());
         }
 
@@ -160,5 +165,6 @@ namespace TechChallenge.Controllers
         {
             return _context.Alunos.Any(e => e.Id == id);
         }
+
     }
 }
